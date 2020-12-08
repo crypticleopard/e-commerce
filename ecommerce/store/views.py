@@ -73,6 +73,18 @@ def processOrder(request):
             order.complete=True
         order.save()
 
+        if order.shipping==True:
+            print('shipping')
+            ShipppingAddress.objects.create(
+                customer=customer,
+                order=order,
+                address=data['shipping']['address'],
+                city=data['shipping']['city'],
+                state=data['shipping']['state'],
+                pincode=data['shipping']['zipcode'],
+            )
+            
+
     else:
         print('User is not logged in.......')
     return JsonResponse('Payment completed',safe=False)
